@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const emailService = require('../services/email-service')
 
 exports.checkBody = (req, res, next) => {
   if (!req.body.email) {
@@ -10,39 +10,24 @@ exports.checkBody = (req, res, next) => {
   next();
 }
 
-exports.login = (req, res) => {
-
-  const transporter = nodemailer.createTransport({
-    host: 'smtpout.secureserver.net',
-    port: 465,
-    service: "Gmail",
-    auth: {
-      user: 'shubham.dixit@techprimelab.com',
-      pass: 'sdixit@8388'
-    }
-  });
-
-  const mailOptions = {
-    from: 'shubham.dixit@techprimelab.com',
-    to: 'kiran.patil@techprimelab.com',
-    subject: 'MBC logging text',
-    text: 'MBC logging text!'
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log('error: ', error);
-      res.status(500).send({
-        status: '500',
-        message: 'Failed to proceed'
-      });
-    } else {
-      res.status(200).send({
-        status: 200,
-        message: 'OTP forwarded to Email'
-      });
-    }
-  });
-
-
+exports.generateOTP = (req, res) => {
+  emailService.sendEmail(req.body.email, 'Subject - MBC logging text',
+      'message - MBC logging text!', res);
+  //     .then(() => {
+  //       console.log('Sucees mail');
+  //   res.status(200).send({
+  //     status: 200,
+  //     message: 'OTP forwarded to Email'
+  //   });
+  // }).catch(() => {
+  //   console.log('fail mail');
+  //   res.status(500).send({
+  //     status: '500',
+  //     message: 'Failed to proceed'
+  //   });
+  // });
 };
+
+exports.validateOTP = () => {
+
+}

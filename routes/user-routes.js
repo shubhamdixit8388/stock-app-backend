@@ -7,7 +7,9 @@ const router = express.Router();
 
 // router.route('/top-5-cheap').get(toursController.aliasTopTours, toursController.getAllTours)
 
-router.route('/login')
-    .post(userController.checkBody, userController.login);
+router.route('/generateOTP')
+    .post(userController.checkBody, userController.generateOTP);
+
+router.route('/validateOTP').post(userController.validateOTP);
 
 module.exports = router;
