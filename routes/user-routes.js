@@ -1,5 +1,6 @@
 const express = require('express');
-const userController = require('../controllers/user-controller')
+const userController = require('../controllers/user-controller');
+const Authenticate = require('../middlewares/auth');
 
 const router = express.Router();
 
@@ -10,6 +11,6 @@ const router = express.Router();
 router.route('/generateOTP')
     .post(userController.checkBody, userController.generateOTP);
 
-router.route('/validateOTP').post(userController.validateOTP);
+router.route('/validateOTP').post(Authenticate.authenticateUser, userController.validateOTP);
 
 module.exports = router;
