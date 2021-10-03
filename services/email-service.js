@@ -9,13 +9,13 @@ exports.sendEmail = (mailTo, subject, message, req, res, otp) => {
     port: 465,
     service: "Gmail",
     auth: {
-      user: 'shubham.dixit@techprimelab.com',
-      pass: 'sdixit@8388'
+      user: 'project.use.svd@gmail.com',
+      pass: 'Project@stock'
     }
   });
 
   const mailOptions = {
-    from: 'shubham.dixit@techprimelab.com',
+    from: 'project.use.svd@gmail.com',
     to: mailTo,
     subject: subject,
     text: message
