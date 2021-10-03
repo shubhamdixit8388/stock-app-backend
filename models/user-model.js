@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     default: false
   },
   otp: {
-    type: Number
+    type: String
   },
   isOTPVerified: {
     type: Boolean,
