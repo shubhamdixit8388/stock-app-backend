@@ -3,12 +3,28 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    // required: true
     required: [true, 'Email is required to proceed'],
     unique: true,
     trim: true
   },
-  // mobileNumber, isAdmin, isPremium, isOTPVerified
+  mobileNumber: {
+    type: Number
+  },
+  iAdmin: {
+    type: Boolean,
+    default: false
+  },
+  isPremium: {
+    type: Boolean,
+    default: false
+  },
+  otp: {
+    type: Number
+  },
+  isOTPVerified: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

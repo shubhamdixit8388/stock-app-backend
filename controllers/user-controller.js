@@ -29,5 +29,6 @@ exports.generateOTP = (req, res) => {
 };
 
 exports.validateOTP = () => {
-
+// get email and otp -> get otp for repected email from db or throw wrong email error
+// -> get encrypted otp from db and compare with otp in body -
 }
