@@ -1,59 +1,61 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
-const _ = require('lodash');
-const User = require('../models/user-model');
+const _ = require("lodash");
+const User = require("../models/user-model");
 
 exports.sendEmail = (mailTo, subject, message, req, res, otp) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtpout.secureserver.net',
+    host: "smtpout.secureserver.net",
     port: 465,
     service: "Gmail",
     auth: {
-      user: 'project.use.svd@gmail.com',
-      pass: 'Project@stock'
-    }
+      user: "project.use.svd@gmail.com",
+      pass: "Project@stock",
+    },
   });
 
   const mailOptions = {
-    from: 'project.use.svd@gmail.com',
+    from: "project.use.svd@gmail.com",
     to: mailTo,
     subject: subject,
-    text: message
+    text: message,
   };
 
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         res.status(500).send({
-          status: '500',
-          message: 'Failed to proceed'
+          status: "500",
+          message: "Failed to proceed",
         });
 
         // reject(error)
       } else {
-        addUser(req, otp).then(result => {
-          res.status(200).send({
-            status: 200,
-            message: 'OTP forwarded to Email',
-            data: result
+        addUser(req, otp)
+          .then((result) => {
+            res.status(200).send({
+              status: 200,
+              message: "OTP forwarded to Email",
+              data: result,
+            });
+          })
+          .catch((e) => {
+            console.log(e);
+            res.status(400).send({
+              status: "fail",
+              message: "Something went wrong with Server",
+            });
           });
-        }).catch(e => {
-          console.log(e);
-          res.status(400).send({
-            status: 'fail',
-            message: 'Something went wrong with Server'
-          });
-        });
         // resolve()
       }
     });
-  })
-}
+  });
+};
 
 const addUser = (req, otp) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const data = {...req.body, otp};
+      const data = { ...req.body, otp };
       let user = new User(_.pick(data, ["email", "otp"]));
       const salt = await bcrypt.genSalt(10);
       const encryptedOtp = await bcrypt.hash(user.otp.toString(), salt);
@@ -61,10 +63,14 @@ const addUser = (req, otp) => {
       let userInDB = await User.findOne({ email: req.body.email });
       if (userInDB) {
         userInDB.otp = encryptedOtp;
-        const userCreated = await User.findByIdAndUpdate(userInDB._id, userInDB, {
-          new: true,
-          runValidators: true
-        });
+        const userCreated = await User.findByIdAndUpdate(
+          userInDB._id,
+          userInDB,
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
         resolve(userCreated);
       } else {
         user.otp = encryptedOtp;
@@ -75,4 +81,4 @@ const addUser = (req, otp) => {
       reject(e);
     }
   });
-}
+};
