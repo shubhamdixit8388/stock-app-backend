@@ -58,7 +58,7 @@ router
  *    description: Validating OTP
  *    responses:
  *      '200':
- *        description: OTP validated uccessfully
+ *        description: OTP validated successfully
  */
 
 router.route("/validateOTP").post(userController.validateOTP);
