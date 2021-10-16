@@ -1,7 +1,7 @@
-const bseService = require("../services/bse-service");
+const stockExchangeService = require("../services/stock-exchange-service");
 
 exports.getIndices = (req, res) => {
-  bseService
+  stockExchangeService
     .getIndices("https://api.bseindia.com/bseindia/api/Indexmasternew/GetData")
     .then((result) => {
       res.status(200).send({

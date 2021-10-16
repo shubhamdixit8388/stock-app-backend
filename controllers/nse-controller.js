@@ -1,7 +1,7 @@
-const nseService = require("../services/nse-service");
+const stockExchangeService = require("../services/stock-exchange-service");
 
 exports.getGainers = (req, res) => {
-  nseService
+  stockExchangeService
     .getGainers("https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json")
     .then((result) => {
       res.status(200).send({
@@ -19,7 +19,7 @@ exports.getGainers = (req, res) => {
 };
 
 exports.getIndices = (req, res) => {
-  nseService
+  stockExchangeService
     .getIndices("https://www1.nseindia.com/live_market/dynaContent/live_watch/stock_watch/liveIndexWatchData.json")
     .then((result) => {
       res.status(200).send({
