@@ -9,13 +9,15 @@ exports.sendEmail = (mailTo, subject, message, req, res, otp) => {
     port: 465,
     service: "Gmail",
     auth: {
-      user: "project.use.svd@gmail.com",
-      pass: "Project@stock",
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS,
     },
   });
+  console.log("process.env.EMAIL:", process.env.EMAIL);
+  console.log("process.env.EMAIL_PASS:", process.env.EMAIL_PASS);
 
   const mailOptions = {
-    from: "project.use.svd@gmail.com",
+    from: process.env.EMAIL,
     to: mailTo,
     subject: subject,
     text: message,
