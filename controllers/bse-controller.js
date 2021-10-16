@@ -10,10 +10,10 @@ exports.getGainers = (req, res) => {
         data: result.data,
       });
     })
-    .catch(() => {
+    .catch((error) => {
       res.status(500).send({
         status: "500",
-        message: "Failed to load data",
+        message: error.message,
       });
     });
 };

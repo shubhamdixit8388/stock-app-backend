@@ -2,6 +2,7 @@ const http = require("./http-service");
 
 exports.getGainers = () => {
   return http.get(
-    "https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json"
+    "https://www.bseindia.com/Msource/gainers.aspx?ln=en",
+    "securityCode,todayClose,pointChange,pointPercent,symbol,url"
   );
 };
