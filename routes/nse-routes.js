@@ -23,4 +23,19 @@ router.route("/gainers").get(nseController.getGainers);
 //   .route("/gainers")
 //   .post(Authenticate.authenticateUser, bsesController.getGainers);
 
+
+/**
+ * @swagger
+ * /api/nse/indices :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: Getting gainers for BSE
+ *    responses:
+ *      '200':
+ *        description: BSE indices send successfully
+ */
+router.route("/indices").get(nseController.getIndices);
+
 module.exports = router;
