@@ -1,8 +1,8 @@
 const bseService = require("../services/bse-service");
 
-exports.getGainers = (req, res) => {
+exports.getIndices = (req, res) => {
   bseService
-    .getGainers()
+    .getIndices("https://api.bseindia.com/bseindia/api/Indexmasternew/GetData")
     .then((result) => {
       res.status(200).send({
         status: 200,
