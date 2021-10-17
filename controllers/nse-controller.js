@@ -1,4 +1,5 @@
 const stockExchangeService = require("../services/stock-exchange-service");
+const GetIndicesNSE = require("../models/get-indices-nse-model");
 
 exports.getGainers = (req, res) => {
   stockExchangeService
@@ -21,11 +22,18 @@ exports.getGainers = (req, res) => {
 exports.getIndices = (req, res) => {
   stockExchangeService
     .getIndices("https://www1.nseindia.com/live_market/dynaContent/live_watch/stock_watch/liveIndexWatchData.json")
-    .then((result) => {
+    .then(async (result) => {
+      let getIndicesNSE;
+      if (result.data.data.length) {
+        await GetIndicesNSE.findOneAndDelete();
+        getIndicesNSE = await GetIndicesNSE.create(result.data);
+      } else {
+        getIndicesNSE = await GetIndicesNSE.findOne();
+      }
       res.status(200).send({
         status: 200,
         message: "Success",
-        data: result.data,
+        data: getIndicesNSE,
       });
     })
     .catch(() => {
