@@ -9,6 +9,9 @@ const stockExchange = new mongoose.Schema({
   nse: {
     allIndices: new mongoose.Schema({
       data: Object
+    }, { timestamps: true }),
+    gainers: new mongoose.Schema({
+      data: Object
     }, { timestamps: true })
   }
 })
