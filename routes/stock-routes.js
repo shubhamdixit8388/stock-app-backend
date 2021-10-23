@@ -4,6 +4,8 @@ const Authenticate = require("../middlewares/auth");
 
 const router = express.Router();
 
+
+
 /**
  * @swagger
  * /api/stock-items :
@@ -43,5 +45,43 @@ const router = express.Router();
  *        description: Stock item added successfully
  */
 router.route("/").post(stockItemController.checkBody, stockItemController.addStockItem);
+
+/**
+ * @swagger
+ * /api/stock-items :
+ *  patch:
+ *    consumes:
+ *      - application/json
+ *
+ *    parameters:
+ *      - in: body
+ *        name: stockItem
+ *        schema:
+ *          type: object
+ *          required:
+ *            - stockName
+ *            - stockType
+ *            - stockInnerItems
+ *          properties:
+ *            - stockName:
+ *              type: string
+ *            - stockType:
+ *              type: string
+ *            - stockInnerItems:
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  value:
+ *                    type: number
+ *                  markColor:
+ *                    type: string
+ *
+ *        description: update stock item
+ *    responses:
+ *      '200':
+ *        description: Stock item updated successfully
+ */
+router.route("/").patch(stockItemController.checkBody, stockItemController.updateStockItem);
 
 module.exports = router;
