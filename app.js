@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/user-routes");
 const bseRoutes = require("./routes/bse-routes");
 const nseRoutes = require("./routes/nse-routes");
+const stockRoutes = require("./routes/stock-routes");
 
 // Middlewares
 const app = new express();
@@ -50,6 +51,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use("/api/auth", userRoutes);
 app.use("/api/bse", bseRoutes);
 app.use("/api/nse", nseRoutes);
+app.use("/api/stock-items", stockRoutes);
 
 // Start Server
 module.exports = app;

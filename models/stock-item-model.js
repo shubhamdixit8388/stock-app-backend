@@ -9,10 +9,10 @@ const stockItemSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Stock type is required']
   },
-  items: [{
-    type: Boolean,
-    default: false
-  }]
-})
+  stockInnerItems: [new mongoose.Schema({
+    value: Number,
+    markColor: String
+  },)]
+}, { timestamps: true })
 
 module.exports = mongoose.model('StockItemSchema', stockItemSchema);
