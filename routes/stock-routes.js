@@ -4,7 +4,19 @@ const Authenticate = require("../middlewares/auth");
 
 const router = express.Router();
 
-
+/**
+ * @swagger
+ * /api/stock-items :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: send all stock items
+ *    responses:
+ *      '200':
+ *        description: all stock items send successfully
+ */
+router.route("/").get(stockItemController.getStockItems);
 
 /**
  * @swagger

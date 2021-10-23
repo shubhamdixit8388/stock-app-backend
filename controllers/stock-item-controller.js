@@ -11,6 +11,22 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
+exports.getStockItems = async (req, res) => {
+  try {
+    // const tour = await Tour.findOne({_id: req.params.id});
+    const stockItems = await StockItemModel.find();
+    res.status(200).send({
+      status: 'success',
+      data: stockItems
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'Fail',
+      message: error.message
+    });
+  }
+}
+
 exports.addStockItem = async (req, res) => {
   try {
     const newStockItem = await StockItemModel.create(req.body);
