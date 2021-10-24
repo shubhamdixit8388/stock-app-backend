@@ -94,6 +94,20 @@ router.route("/").post(stockItemController.checkBody, stockItemController.addSto
  *      '200':
  *        description: Stock item updated successfully
  */
-router.route("/").patch(stockItemController.checkBody, stockItemController.updateStockItem);
+router.route("/:id").patch(stockItemController.checkBody, stockItemController.updateStockItem);
+
+/**
+ * @swagger
+ * /api/stock-items/:stockType :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: send all stock items
+ *    responses:
+ *      '200':
+ *        description: all stock items send successfully
+ */
+router.route("/:stockType").get(stockItemController.getStockItemsByStockType);
 
 module.exports = router;

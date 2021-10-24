@@ -44,9 +44,6 @@ exports.addStockItem = async (req, res) => {
 
 exports.updateStockItem = async (req, res) => {
   try {
-    console.log('req.params.id: ', req.params.id);
-    req.params.id = '617397fb18fa2720b41421ff';
-    console.log('req.params.id: ', req.params.id);
     const updatedStockItem = await StockItemModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -56,6 +53,21 @@ exports.updateStockItem = async (req, res) => {
       data: {
         updatedStockItem
       }
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'Fail',
+      message: error.message
+    });
+  }
+}
+
+exports.getStockItemsByStockType = async (req, res) => {
+  try {
+    const stockItemsByStockType = await StockItemModel.find({'stockType': req.params.stockType});
+    res.status(200).send({
+      status: 'success',
+      data: stockItemsByStockType
     });
   } catch (error) {
     res.status(400).send({
