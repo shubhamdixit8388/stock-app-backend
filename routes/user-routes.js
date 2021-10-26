@@ -4,10 +4,6 @@ const Authenticate = require("../middlewares/auth");
 
 const router = express.Router();
 
-// router.param('id', toursController.checkTourId);
-
-// router.route('/top-5-cheap').get(toursController.aliasTopTours, toursController.getAllTours)
-
 /**
  * @swagger
  * /api/auth/generateOTP :
@@ -62,5 +58,41 @@ router
  */
 
 router.route("/validateOTP").post(userController.validateOTP);
+
+/**
+ * @swagger
+ * /api/auth/save-token :
+ *  post:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    parameters:
+ *      - in: formData
+ *        name: token
+ *        required: true
+ *        schema:
+ *          type:string
+ *        description: device token
+ *
+ *      - in: formData
+ *        name: isAvailable
+ *        required: true
+ *        schema:
+ *          type:boolean
+ *        description: isAvailable
+ *
+ *      - in: formData
+ *        name: notificationDisabled
+ *        required: true
+ *        schema:
+ *          type:boolean
+ *        description: notificationDisabled
+ *
+ *    description: Save device token for user
+ *    responses:
+ *      '200':
+ *        description: Token saved successfully
+ */
+router.route("/save-token").post(userController.saveDeviceToken);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const emailService = require("../services/email-service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
+const UtilityService = require("../services/utility-service");
 
 exports.checkBody = (req, res, next) => {
   console.log(req.body);
@@ -71,3 +72,22 @@ exports.validateOTP = async (req, res) => {
 const generateAuthToken = (user) => {
   return jwt.sign({ _id: user._id, email: user.email }, "stock_jwtPrivateKey");
 };
+
+exports.saveDeviceToken = async (req, res) => {
+  const {_id} = UtilityService.decodeToken(req);
+  try {
+    const user = await User.findByIdAndUpdate(_id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    res.status(200).send({
+      status: 'success',
+      data: user
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'Fail',
+      message: error
+    });
+  }
+}
