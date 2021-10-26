@@ -6,6 +6,20 @@ const router = express.Router();
 
 /**
  * @swagger
+ * /api/stock-items/top-five :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: send all stock items
+ *    responses:
+ *      '200':
+ *        description: all stock items send successfully
+ */
+router.route("/top-five").get(stockItemController.getTopFiveStockItems);
+
+/**
+ * @swagger
  * /api/stock-items :
  *  get:
  *    consumes:

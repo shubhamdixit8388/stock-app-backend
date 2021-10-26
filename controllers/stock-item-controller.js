@@ -11,6 +11,21 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
+exports.getTopFiveStockItems = async (req, res) => {
+  try {
+    const stockItems = await StockItemModel.find().sort('-createdAt').limit(2);
+    res.status(200).send({
+      status: 'success',
+      data: stockItems
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'Fail',
+      message: error.message
+    });
+  }
+}
+
 exports.getStockItems = async (req, res) => {
   try {
     // const tour = await Tour.findOne({_id: req.params.id});
