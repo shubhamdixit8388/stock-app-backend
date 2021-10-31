@@ -95,4 +95,18 @@ router.route("/validateOTP").post(userController.validateOTP);
  */
 router.route("/save-token").post(userController.saveDeviceToken);
 
+/**
+ * @swagger
+ * /api/auth/user :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: send all stock items
+ *    responses:
+ *      '200':
+ *        description: all stock items send successfully
+ */
+router.route("/user").get(userController.getUserDetails);
+
 module.exports = router;

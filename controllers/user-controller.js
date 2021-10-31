@@ -91,3 +91,26 @@ exports.saveDeviceToken = async (req, res) => {
     });
   }
 }
+
+exports.getUserDetails = async (req, res) => {
+  const user = UtilityService.decodeToken(req);
+  if (user !== null) {
+    try {
+      const userDetails = await User.findById(user._id);
+      res.status(200).send({
+        status: 'success',
+        data: userDetails
+      })
+    } catch (e) {
+      res.status(500).send({
+        status: 'Fail',
+        message: 'Server issue'
+      })
+    }
+  } else {
+    res.status(400).send({
+      status: 'Fail',
+      message: 'UnAuthenticated user'
+    })
+  }
+}
