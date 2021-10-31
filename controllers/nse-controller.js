@@ -2,6 +2,7 @@ const stockExchangeService = require("../services/stock-exchange-service");
 const StockExchange = require("../models/stock-exchange-model");
 
 exports.getGainers = (req, res) => {
+  console.log('5')
   stockExchangeService
       .getGainers("https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json")
       .then(async (result) => {
