@@ -1,5 +1,7 @@
 const pushNotificationService = require('../services/push-notification-service');
+const UtilityService = require('../services/utility-service');
 const PushNotificationModel = require('../models/push-notification-model');
+const UserModel = require('../models/user-model');
 
 exports.checkPuhNotificationBody = (req, res, next) => {
   if(!(req.body.title && req.body.message)) {
@@ -36,5 +38,38 @@ const savePushNotification = async (req, res) => {
       status: 'Fail',
       message: error.message
     });
+  }
+}
+
+exports.updateNotificationDisabled = async (req, res) => {
+  const user = UtilityService.decodeToken(req);
+  if (user !== null) {
+    try {
+      if(!req.body.notificationDisabled) {
+        res.status(400).send({
+          status: 'Fail',
+          message: 'required fields are not provided'
+        });
+      } else {
+        const updatedUser = await UserModel.findByIdAndUpdate(user._id, req.body, {
+          new: true,
+          runValidators: true
+        });
+        res.status(200).send({
+          status: 'success',
+          data: updatedUser
+        });
+      }
+    } catch (error) {
+      res.status(400).send({
+        status: 'Fail',
+        message: error
+      });
+    }
+  } else {
+    res.status(400).send({
+      status: 'Fail',
+      message: 'UnAuthenticated user'
+    })
   }
 }

@@ -34,4 +34,27 @@ const Authenticate = require("../middlewares/auth");
 router.route("/").post(notificationController.checkPuhNotificationBody,
     notificationController.sendPushNotification);
 
+
+/**
+ * @swagger
+ * /api/push-notification/notification-disabled :
+ *  put:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    parameters:
+ *      - in: formData
+ *        name: notificationDisabled
+ *        required: true
+ *        schema:
+ *          type:boolean
+ *        description: notificationDisabled
+ *
+ *    description: change notificationDisabled
+ *    responses:
+ *      '200':
+ *        description: notificationDisabled changed successfully
+ */
+router.route("/notification-disabled").post(notificationController.updateNotificationDisabled);
+
 module.exports = router;
