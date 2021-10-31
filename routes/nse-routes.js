@@ -19,6 +19,21 @@ const router = express.Router();
 
 router.route("/gainers").get(nseController.getGainers);
 
+/**
+ * @swagger
+ * /api/nse/losers :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: Getting gainers for NSE
+ *    responses:
+ *      '200':
+ *        description: NSE gainers send successfully
+ */
+
+router.route("/losers").get(nseController.getLosers);
+
 // router
 //   .route("/gainers")
 //   .post(Authenticate.authenticateUser, bsesController.getGainers);
