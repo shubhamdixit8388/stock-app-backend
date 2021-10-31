@@ -6,7 +6,7 @@ exports.getIndices = (req, res) => {
     .getIndices("https://api.bseindia.com/bseindia/api/Indexmasternew/GetData")
     .then(async (result) => {
       if (result && result.data.data && result.data.data.length) {
-        let query = {_id: '616c2d4c3250fc3150da01b0'};
+        let query = {_id: '617edc4888fef61b2d64bc07'};
         const data = {$set: {'bse.allIndices.data': result.data.data}}
         StockExchange.findOneAndUpdate(query, data, {new: true}, (err, doc) => {
               if(err) {

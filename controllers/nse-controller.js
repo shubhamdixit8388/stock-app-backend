@@ -6,8 +6,9 @@ exports.getGainers = (req, res) => {
       .getGainers("https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json")
       .then(async (result) => {
         if (result && result.data.data && result.data.data.length) {
-          let query = {_id: '616c2d4c3250fc3150da01b0'};
+          let query = {_id: '617edc4888fef61b2d64bc07'};
           const data = {$set: {'nse.gainers.data': result.data.data}}
+          // StockExchange.findOne(query).then(res => console.log(res));
           StockExchange.findOneAndUpdate(query, data, {new: true}, (err, doc) => {
             if(err) {
               res.status(500).send({
@@ -48,7 +49,7 @@ exports.getLosers = (req, res) => {
       .getGainers("https://www1.nseindia.com/live_market/dynaContent/live_analysis/losers/niftyLosers1.json")
       .then(async (result) => {
         if (result && result.data.data && result.data.data.length) {
-          let query = {_id: '616c2d4c3250fc3150da01b0'};
+          let query = {_id: '617edc4888fef61b2d64bc07'};
           const data = {$set: {'nse.losers.data': result.data.data}}
           StockExchange.findOneAndUpdate(query, data, {new: true}, (err, doc) => {
             if(err) {
@@ -91,7 +92,7 @@ exports.getIndices = (req, res) => {
       .getIndices("https://www1.nseindia.com/live_market/dynaContent/live_watch/stock_watch/liveIndexWatchData.json")
       .then(async (result) => {
         if (result && result.data.data && result.data.data.length) {
-          let query = {_id: '616c2d4c3250fc3150da01b0'};
+          let query = {_id: '617edc4888fef61b2d64bc07'};
           const data = {$set: {'nse.allIndices.data': result.data.data}}
           StockExchange.findOneAndUpdate(query, data, {new: true}, (err, doc) => {
             if(err) {
