@@ -8,7 +8,7 @@ exports.getGainers = (req, res) => {
         if (result && result.data.data && result.data.data.length) {
           let query = {_id: '617edc4888fef61b2d64bc07'};
           const data = {$set: {'nse.gainers.data': result.data.data}}
-          // StockExchange.findOne(query).then(res => console.log(res));
+          console.log('_id: ',query);
           StockExchange.findOneAndUpdate(query, data, {new: true}, (err, doc) => {
             if(err) {
               res.status(500).send({
@@ -16,6 +16,9 @@ exports.getGainers = (req, res) => {
                 message: err.message,
               });
             } else {
+              console.log('doc - ', doc)
+              console.log('doc - ', doc.nse)
+              console.log('doc - ', doc.nse.gainers.data)
               res.status(200).send({
                 status: 200,
                 message: "Success",
@@ -25,6 +28,7 @@ exports.getGainers = (req, res) => {
             }
           });
         } else {
+          console.log('30');
           const data = await StockExchange.findOne({}, {'nse.gainers.data': 1});
           res.status(200).send({
             status: 200,
@@ -35,6 +39,7 @@ exports.getGainers = (req, res) => {
         }
       })
       .catch(async () => {
+        console.log('42');
         const data = await StockExchange.findOne({}, {'nse.gainers.data': 1});
         res.status(200).send({
           status: 200,
