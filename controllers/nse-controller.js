@@ -6,6 +6,7 @@ exports.getGainers = (req, res) => {
   stockExchangeService
       .getGainers("https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json")
       .then(async (result) => {
+        console.log('9')
         if (result && result.data.data && result.data.data.length) {
           let query = {_id: '617edc4888fef61b2d64bc07'};
           const data = {$set: {'nse.gainers.data': result.data.data}}
