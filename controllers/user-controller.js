@@ -52,10 +52,16 @@ exports.validateOTP = async (req, res) => {
 
   try {
     let user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Invalid OTP-1.");
+    if (!user)
+      return res
+        .status(400)
+        .send({ status: "fail", message: "Invalid OTP-1." });
 
     const isOTPValid = await bcrypt.compare(req.body.otp.toString(), user.otp);
-    if (!isOTPValid) return res.status(400).send("Invalid OTP-2.");
+    if (!isOTPValid)
+      return res
+        .status(400)
+        .send({ status: "fail", message: "Invalid OTP-2." });
 
     const token = generateAuthToken(user);
     res.status(200).send({
@@ -65,7 +71,9 @@ exports.validateOTP = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    return res.status(400).send("Server Failed to validate OTP.");
+    return res
+      .status(400)
+      .send({ status: "fail", message: "Server Failed to validate OTP." });
   }
 };
 
@@ -74,23 +82,23 @@ const generateAuthToken = (user) => {
 };
 
 exports.saveDeviceToken = async (req, res) => {
-  const {_id} = UtilityService.decodeToken(req);
+  const { _id } = UtilityService.decodeToken(req);
   try {
     const user = await User.findByIdAndUpdate(_id, req.body, {
       new: true,
-      runValidators: true
+      runValidators: true,
     });
     res.status(200).send({
-      status: 'success',
-      data: user
+      status: "success",
+      data: user,
     });
   } catch (error) {
     res.status(400).send({
-      status: 'Fail',
-      message: error
+      status: "Fail",
+      message: error,
     });
   }
-}
+};
 
 exports.getUserDetails = async (req, res) => {
   const user = UtilityService.decodeToken(req);
@@ -98,19 +106,19 @@ exports.getUserDetails = async (req, res) => {
     try {
       const userDetails = await User.findById(user._id);
       res.status(200).send({
-        status: 'success',
-        data: userDetails
-      })
+        status: "success",
+        data: userDetails,
+      });
     } catch (e) {
       res.status(500).send({
-        status: 'Fail',
-        message: 'Server issue'
-      })
+        status: "Fail",
+        message: "Server issue",
+      });
     }
   } else {
     res.status(400).send({
-      status: 'Fail',
-      message: 'UnAuthenticated user'
-    })
+      status: "Fail",
+      message: "UnAuthenticated user",
+    });
   }
-}
+};
