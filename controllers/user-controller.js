@@ -25,57 +25,97 @@ exports.generateOTP = (req, res) => {
     res,
     otp
   );
-  //     .then(() => {
-  //       console.log('Sucees mail');
-  //   res.status(200).send({
-  //     status: 200,
-  //     message: 'OTP forwarded to Email'
-  //   });
-  // }).catch(() => {
-  //   console.log('fail mail');
-  //   res.status(500).send({
-  //     status: '500',
-  //     message: 'Failed to proceed'
-  //   });
-  // });
 };
 
 exports.validateOTP = async (req, res) => {
-  // get email and otp -> get otp for respected email from db or throw wrong email error
-  // -> get encrypted otp from db and compare with otp in body -
-  if (!(req.body.email && req.body.otp)) {
+  if (!(req.body.email && req.body.otp && req.body.loginType)) {
     return res.status(400).send({
       status: "fail",
-      message: "OTP or email not provided",
+      message: "OTP or email or login type not provided",
     });
   }
+  switch (req.body.loginType) {
+    case 'google':
+      signInWithGoogle(req, res);
+      break;
+    case 'otp':
+      signInWithOTP(req, res).then().catch();
+      break;
+    default:
+      return res
+          .status(400)
+          .send({ status: "fail", message: "Wrong login type." });
+  }
+};
 
+const signInWithGoogle = (req, res) => {
+  try {
+    User.findOneAndUpdate({ email: req.body.email }, req.body, {new: true},
+        async (err, doc) => {
+          if(err) {
+            res.status(500).send({
+              status: "500",
+              message: err.message,
+            });
+          } else {
+            if (!doc) {
+              const user = await User.create(req.body);
+              const token = generateAuthToken(user);
+              res.status(200).send({
+                status: 200,
+                message: "OTP Validated",
+                token: token,
+              });
+            } else {
+              const token = generateAuthToken(doc);
+              res.status(200).send({
+                status: 200,
+                message: "OTP Validated",
+                token: token,
+              });
+            }
+          }
+        });
+  } catch (e) {
+    res.status(400).send({ status: "fail", message: e.message });
+  }
+}
+
+const signInWithOTP = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user)
       return res
-        .status(400)
-        .send({ status: "fail", message: "Invalid OTP-1." });
-
+          .status(400)
+          .send({ status: "fail", message: "Invalid OTP." });
     const isOTPValid = await bcrypt.compare(req.body.otp.toString(), user.otp);
     if (!isOTPValid)
       return res
-        .status(400)
-        .send({ status: "fail", message: "Invalid OTP-2." });
+          .status(400)
+          .send({ status: "fail", message: "Invalid OTP." });
 
-    const token = generateAuthToken(user);
-    res.status(200).send({
-      status: 200,
-      message: "OTP Validated",
-      token: token,
-    });
+    User.findOneAndUpdate({ email: req.body.email }, {isOTPVerified: true}, {new: true},
+        (err, doc) => {
+          if(err) {
+            res.status(500).send({
+              status: "500",
+              message: err.message,
+            });
+          } else {
+            const token = generateAuthToken(user);
+            res.status(200).send({
+              status: 200,
+              message: "OTP Validated",
+              token: token,
+            });
+          }
+        });
   } catch (e) {
-    console.log(e);
     return res
-      .status(400)
-      .send({ status: "fail", message: "Server Failed to validate OTP." });
+        .status(400)
+        .send({ status: "fail", message: "Server Failed to validate OTP." });
   }
-};
+}
 
 const generateAuthToken = (user) => {
   return jwt.sign({ _id: user._id, email: user.email }, "stock_jwtPrivateKey");
