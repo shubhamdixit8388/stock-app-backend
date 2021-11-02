@@ -45,7 +45,7 @@ exports.updateNotificationDisabled = async (req, res) => {
   const user = UtilityService.decodeToken(req);
   if (user !== null) {
     try {
-      if(!req.body.notificationDisabled) {
+      if(!req.body.hasOwnProperty('notificationDisabled')) {
         res.status(400).send({
           status: 'Fail',
           message: 'required fields are not provided'

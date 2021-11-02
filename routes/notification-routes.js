@@ -51,7 +51,7 @@ router.route("/").post(notificationController.checkPuhNotificationBody,
 /**
  * @swagger
  * /api/push-notification/notification-disabled :
- *  put:
+ *  post:
  *    consumes:
  *      - application/x-www-form-urlencoded
  *
