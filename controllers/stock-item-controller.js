@@ -15,9 +15,6 @@ exports.checkBody = (req, res, next) => {
 
 exports.getTopFiveStockItems = async (req, res) => {
   try {
-    const temp = PushNotificationService.sendPushNotificationToAll('sssssss', 'ssssss');
-    console.log('Temp: ', temp);
-    await UserService.getUserTokens();
     const stockItems = await StockItemModel.find().sort('-createdAt').limit(5);
     res.status(200).send({
       status: 'success',
