@@ -73,3 +73,19 @@ exports.updateNotificationDisabled = async (req, res) => {
     })
   }
 }
+
+exports.getAllNotifications = async (req, res) => {
+  try {
+    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1});
+    res.status(200).send({
+      status: 200,
+      message: "Success",
+      data: data,
+    });
+  } catch (e) {
+    res.status(500).send({
+      status: "500",
+      message: e.message,
+    });
+  }
+};

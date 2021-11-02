@@ -1,8 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const notificationController = require('../controllers/notification-controller');
-
 const Authenticate = require("../middlewares/auth");
+
+/**
+ * @swagger
+ * /api/push-notification :
+ *  get:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    description: Get all notifications
+ *    responses:
+ *      '200':
+ *        description: notifications send successfully
+ */
+router.route("/").get(notificationController.getAllNotifications);
 
 /**
  * @swagger
