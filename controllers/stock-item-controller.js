@@ -1,7 +1,4 @@
-
 const StockItemModel = require("../models/stock-item-model");
-const UserService = require("../services/user-service");
-const PushNotificationService = require("../services/push-notification-service");
 
 exports.checkBody = (req, res, next) => {
   if (!req.body.stockName || !req.body.stockType || req.body.stockInnerItems.length !== 4) {
@@ -15,9 +12,6 @@ exports.checkBody = (req, res, next) => {
 
 exports.getTopFiveStockItems = async (req, res) => {
   try {
-    const temp = PushNotificationService.sendPushNotificationToAll('sssssss', 'ssssss');
-    console.log('Temp: ', temp);
-    await UserService.getUserTokens();
     const stockItems = await StockItemModel.find().sort('-createdAt').limit(5);
     res.status(200).send({
       status: 'success',
@@ -57,7 +51,7 @@ exports.addStockItem = async (req, res) => {
   } catch (error) {
     res.status(400).send({
       status: 'Fail',
-      message: error
+      message: error.message
     });
   }
 }
