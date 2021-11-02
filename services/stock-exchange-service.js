@@ -6,5 +6,5 @@ exports.getGainers = (url) => {
 };
 
 exports.getIndices = (url) => {
-  return http.get(url);
+  return http.getAllIndices(url);
 };
