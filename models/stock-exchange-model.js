@@ -12,6 +12,9 @@ const stockExchange = new mongoose.Schema({
     }, { timestamps: true }),
     gainers: new mongoose.Schema({
       data: Object
+    }, { timestamps: true }),
+    losers: new mongoose.Schema({
+      data: Object
     }, { timestamps: true })
   }
 })
