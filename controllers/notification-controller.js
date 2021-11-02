@@ -16,7 +16,7 @@ exports.checkPuhNotificationBody = (req, res, next) => {
 exports.sendPushNotification = (req, res) => {
   pushNotificationService.sendPushNotificationToAll(req.body.title, req.body.message)
       .then(() => {
-        savePushNotification(req, res);
+        savePushNotification(req, res).then().catch();
       })
       .catch(error => {
         res.status(200).send({
@@ -45,7 +45,7 @@ exports.updateNotificationDisabled = async (req, res) => {
   const user = UtilityService.decodeToken(req);
   if (user !== null) {
     try {
-      if(!req.body.notificationDisabled) {
+      if(!req.body.hasOwnProperty('notificationDisabled')) {
         res.status(400).send({
           status: 'Fail',
           message: 'required fields are not provided'
@@ -73,3 +73,19 @@ exports.updateNotificationDisabled = async (req, res) => {
     })
   }
 }
+
+exports.getAllNotifications = async (req, res) => {
+  try {
+    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1, dateInString: 1});
+    res.status(200).send({
+      status: 200,
+      message: "Success",
+      data: data,
+    });
+  } catch (e) {
+    res.status(500).send({
+      status: "500",
+      message: e.message,
+    });
+  }
+};

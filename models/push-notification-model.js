@@ -9,6 +9,10 @@ const pushNotificationSchema = new mongoose.Schema({
     type: String,
     required: [true, 'message is required']
   },
+  dateInString: {
+    type: String,
+    default: new Date().toLocaleString().toString()
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

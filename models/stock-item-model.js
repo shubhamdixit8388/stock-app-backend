@@ -12,7 +12,11 @@ const stockItemSchema = new mongoose.Schema({
   stockInnerItems: [new mongoose.Schema({
     value: Number,
     markColor: String
-  },)]
+  },)],
+  dateInString: {
+    type: String,
+    default: new Date().toLocaleString().toString()
+  }
 }, { timestamps: true })
 
 module.exports = mongoose.model('StockItemSchema', stockItemSchema);

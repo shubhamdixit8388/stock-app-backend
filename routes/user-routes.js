@@ -51,6 +51,13 @@ router
  *          type:string
  *        description: otp
  *
+ *      - in: formData
+ *        name: loginType
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: loginType
+ *
  *    description: Validating OTP
  *    responses:
  *      '200':
