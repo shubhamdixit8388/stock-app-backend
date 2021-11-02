@@ -16,7 +16,7 @@ exports.checkPuhNotificationBody = (req, res, next) => {
 exports.sendPushNotification = (req, res) => {
   pushNotificationService.sendPushNotificationToAll(req.body.title, req.body.message)
       .then(() => {
-        savePushNotification(req, res);
+        savePushNotification(req, res).then().catch();
       })
       .catch(error => {
         res.status(200).send({
@@ -76,7 +76,7 @@ exports.updateNotificationDisabled = async (req, res) => {
 
 exports.getAllNotifications = async (req, res) => {
   try {
-    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1});
+    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1, dateInString: 1});
     res.status(200).send({
       status: 200,
       message: "Success",

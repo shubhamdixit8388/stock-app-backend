@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
     select: false
+  },
+  dateInString: {
+    type: String,
+    default: new Date().toLocaleString().toString()
   }
 })
 
