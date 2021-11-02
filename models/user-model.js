@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   mobileNumber: {
     type: Number
   },
-  iAdmin: {
+  isAdmin: {
     type: Boolean,
     default: false
   },
@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
     default: false
   },
   otp: {
+    type: String
+  },
+  loginType: {
     type: String
   },
   isOTPVerified: {
