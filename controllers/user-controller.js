@@ -82,8 +82,8 @@ const generateAuthToken = (user) => {
 };
 
 exports.saveDeviceToken = async (req, res) => {
-  const { _id } = UtilityService.decodeToken(req);
   try {
+    const { _id } = UtilityService.decodeToken(req);
     const user = await User.findByIdAndUpdate(_id, req.body, {
       new: true,
       runValidators: true,
@@ -95,7 +95,7 @@ exports.saveDeviceToken = async (req, res) => {
   } catch (error) {
     res.status(400).send({
       status: "Fail",
-      message: error,
+      message: error.message,
     });
   }
 };

@@ -93,7 +93,7 @@ router.route("/validateOTP").post(userController.validateOTP);
  *      '200':
  *        description: Token saved successfully
  */
-router.route("/save-token").post(userController.saveDeviceToken);
+router.route("/save-token").post(Authenticate.authenticateUser, userController.saveDeviceToken);
 
 /**
  * @swagger
