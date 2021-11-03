@@ -19,7 +19,7 @@ exports.generateOTP = (req, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000);
   emailService.sendEmail(
     req.body.email,
-    "Welcome to Stock App",
+    "Welcome to Trader's Tunnel",
     "Your OTP is " + otp,
     req,
     res,
