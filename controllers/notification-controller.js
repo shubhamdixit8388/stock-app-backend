@@ -76,7 +76,7 @@ exports.updateNotificationDisabled = async (req, res) => {
 
 exports.getAllNotifications = async (req, res) => {
   try {
-    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1, dateInString: 1});
+    const data = await PushNotificationModel.find({}, {createdAt: 1, title: 1, message: 1, dateInString: 1}).sort('-createdAt');
     res.status(200).send({
       status: 200,
       message: "Success",
