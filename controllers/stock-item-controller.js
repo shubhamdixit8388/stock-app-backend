@@ -15,7 +15,7 @@ exports.checkBody = (req, res, next) => {
 
 exports.getTopFiveStockItems = async (req, res) => {
   try {
-    const stockItems = await StockItemModel.find().sort('-createdAt').limit(5);
+    const stockItems = await StockItemModel.find().limit(5).find({isDeleted: false}).sort('-createdAt');
     res.status(200).send({
       status: 'success',
       data: stockItems
@@ -70,6 +70,21 @@ exports.updateStockItem = async (req, res) => {
       data: {
         updatedStockItem
       }
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'Fail',
+      message: error.message
+    });
+  }
+}
+
+exports.deleteStockItem = async (req, res) => {
+  try {
+    const updatedStockItem = await StockItemModel.findByIdAndUpdate(req.params.id, {isDeleted: true});
+    res.status(200).send({
+      status: 'success',
+      data: updatedStockItem
     });
   } catch (error) {
     res.status(400).send({

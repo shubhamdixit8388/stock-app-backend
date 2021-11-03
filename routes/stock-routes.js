@@ -112,6 +112,18 @@ router.route("/:id").patch(stockItemController.checkBody, stockItemController.up
 
 /**
  * @swagger
+ * /api/stock-items :
+ *  delete:
+ *    consumes:
+ *      - application/json
+ *    responses:
+ *      '200':
+ *        description: Stock item deleted successfully
+ */
+router.route("/:id").delete(stockItemController.deleteStockItem);
+
+/**
+ * @swagger
  * /api/stock-items/:stockType :
  *  get:
  *    consumes:

@@ -11,7 +11,7 @@ mongoose.connect(process.env.DATABASE, {
   useUnifiedTopology: true
 })
     .then(() => console.log('Database connection succeed!!!'))
-    .catch(() => console.log('Database connection Failed!!!'));
+    .catch(error => console.log('Database connection Failed!!!:', error));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

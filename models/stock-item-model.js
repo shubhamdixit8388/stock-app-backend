@@ -16,6 +16,10 @@ const stockItemSchema = new mongoose.Schema({
   dateInString: {
     type: String,
     default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
+  },
+    isDeleted: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 
