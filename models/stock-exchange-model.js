@@ -6,7 +6,7 @@ const stockExchange = new mongoose.Schema({
       data: Object,
       dateInString: {
         type: String,
-        default: new Date().toLocaleString().toString()
+        default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
       }
     }, { timestamps: true })
   },
@@ -15,21 +15,21 @@ const stockExchange = new mongoose.Schema({
       data: Object,
       dateInString: {
         type: String,
-        default: new Date().toLocaleString().toString()
+        default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
       }
     }, { timestamps: true }),
     gainers: new mongoose.Schema({
       data: Object,
       dateInString: {
         type: String,
-        default: new Date().toLocaleString().toString()
+        default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
       }
     }, { timestamps: true }),
     losers: new mongoose.Schema({
       data: Object,
       dateInString: {
         type: String,
-        default: new Date().toLocaleString().toString()
+        default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
       }
     }, { timestamps: true })
   }
