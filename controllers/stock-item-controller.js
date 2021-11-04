@@ -98,7 +98,7 @@ exports.deleteStockItem = async (req, res) => {
 
 exports.getStockItemsByStockType = async (req, res) => {
   try {
-    const stockItemsByStockType = await StockItemModel.find({'stockType': req.params.stockType});
+    const stockItemsByStockType = await StockItemModel.find({'stockType': req.params.stockType}).sort('-createdAt');;
     res.status(200).send({
       status: 'success',
       data: stockItemsByStockType
