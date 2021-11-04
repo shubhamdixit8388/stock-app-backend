@@ -36,8 +36,15 @@ router.route("/").get(notificationController.getAllNotifications);
  *        name: message
  *        required: true
  *        schema:
- *          type:boolean
+ *          type:string
  *        description: Notification message
+ *
+ *      - in: formData
+ *        name: dateCreated
+ *        required: true
+ *        schema:
+ *          type:string
+ *        description: dateCreated
  *
  *    description: send puh notification to device
  *    responses:

@@ -48,10 +48,13 @@ router.route("/").get(stockItemController.getStockItems);
  *            - stockName
  *            - stockType
  *            - stockInnerItems
+ *            - dateCreated
  *          properties:
  *            - stockName:
  *              type: string
  *            - stockType:
+ *              type: string
+ *            - dateCreated:
  *              type: string
  *            - stockInnerItems:
  *              type: array

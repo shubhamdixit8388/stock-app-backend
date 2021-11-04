@@ -4,10 +4,10 @@ const PushNotificationModel = require('../models/push-notification-model');
 const UserModel = require('../models/user-model');
 
 exports.checkPuhNotificationBody = (req, res, next) => {
-  if(!(req.body.title && req.body.message)) {
+  if(!(req.body.title && req.body.message && req.body.dateCreated)) {
     return res.status(400).send({
       status: "fail",
-      message: "title and message are required for push notification",
+      message: "title, message and dateCreated are required for push notification",
     });
   }
   next();
@@ -28,7 +28,9 @@ exports.sendPushNotification = (req, res) => {
 
 const savePushNotification = async (req, res) => {
   try {
-    const notification = await PushNotificationModel.create(req.body);
+    const dateInString = JSON.parse(JSON.stringify(req.body.dateCreated));
+    delete req.body.dateCreated;
+    const notification = await PushNotificationModel.create({...req.body, dateInString});
     res.status(201).send({
       status: 'success',
       data: notification

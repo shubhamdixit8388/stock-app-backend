@@ -46,7 +46,9 @@ exports.getStockItems = async (req, res) => {
 
 exports.addStockItem = async (req, res) => {
   try {
-    const newStockItem = await StockItemModel.create(req.body);
+    const dateInString = JSON.parse(JSON.stringify(req.body.dateCreated));
+    delete req.body.dateCreated;
+    const newStockItem = await StockItemModel.create({...req.body, dateInString});
     res.status(201).send({
       status: 'success',
       data: newStockItem
