@@ -12,12 +12,7 @@ const pushNotificationSchema = new mongoose.Schema({
   dateInString: {
     type: String,
     default: new Date().toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}).toString()
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-    select: false
   }
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('PushNotificationSchema', pushNotificationSchema);
