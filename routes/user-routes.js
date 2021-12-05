@@ -104,6 +104,35 @@ router.route("/save-token").post(Authenticate.authenticateUser, userController.s
 
 /**
  * @swagger
+ * /api/auth/save-expoToken :
+ *  post:
+ *    consumes:
+ *      - application/x-www-form-urlencoded
+ *
+ *    parameters:
+ *      - in: formData
+ *        name: email
+ *        required: true
+ *        schema:
+ *          type:string
+ *        description: user email
+ *
+ *      - in: formData
+ *        name: token
+ *        required: true
+ *        schema:
+ *          type:boolean
+ *        description: expo token
+ *
+ *    description: Save device token for user
+ *    responses:
+ *      '200':
+ *        description: Token saved successfully
+ */
+router.route("/save-expoToken").post(userController.saveDeviceExpoToken);
+
+/**
+ * @swagger
  * /api/auth/user :
  *  get:
  *    consumes:

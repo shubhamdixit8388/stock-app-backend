@@ -145,6 +145,34 @@ exports.saveDeviceToken = async (req, res) => {
   }
 };
 
+exports.saveDeviceExpoToken = async (req, res) => {
+  try {
+    if (!req.body.token) {
+      res.status(400).send({
+        status: "Fail",
+        message: 'expo token not provided',
+      });
+    }
+    const user = await User.findOneAndUpdate({email: req.body.email}, {token: req.body.token},
+        {runValidators: false});
+    if (!user) {
+      res.status(400).send({
+        status: "Fail",
+        message: 'User not found with this email',
+      });
+    }
+    res.status(200).send({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "Fail",
+      message: error.message,
+    });
+  }
+};
+
 exports.getUserDetails = async (req, res) => {
   const user = UtilityService.decodeToken(req);
   if (user !== null) {
